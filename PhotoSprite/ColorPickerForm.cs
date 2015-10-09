@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace PhotoSprite
 {
-    public partial class Form1 : Form
+    public partial class ColorPickerForm : Form
     {
-        public Form1()
+        public ColorPickerForm()
         {
             InitializeComponent();
         }
