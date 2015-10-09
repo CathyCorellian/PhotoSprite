@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 
 namespace PhotoSprite
 {
-    class Utility
+    static class Utility
     {
         static public void Save(Bitmap bmp, string filePath)
         {
