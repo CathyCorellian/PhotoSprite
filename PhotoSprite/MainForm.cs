@@ -16,14 +16,25 @@ namespace PhotoSprite
             InitializeComponent();
         }
 
+
+
         private void foregroundBrushColorToolStripButton_Click(object sender, EventArgs e)
         {
+            var colorPickerForm = new ColorPickerForm(foregroundBrushColorToolStripButton.BackColor);
+            if(colorPickerForm.ShowDialog() == DialogResult.OK)
+            {
+                foregroundBrushColorToolStripButton.BackColor = colorPickerForm.CurrentColor;
+            }
 
         }
 
         private void backgroundBrushColorToolStripButton_Click(object sender, EventArgs e)
         {
-
+            var colorPickerForm = new ColorPickerForm(backgroundBrushColorToolStripButton.BackColor);
+            if (colorPickerForm.ShowDialog() == DialogResult.OK)
+            {
+                backgroundBrushColorToolStripButton.BackColor = colorPickerForm.CurrentColor;
+            }
         }
     }
 }

@@ -72,15 +72,5 @@ namespace PhotoSprite
 
             }
         }
-
-        static public HSL ToHSL(this Color color)
-        {
-            return new HSL() 
-            {
-                Hue = color.GetHue(),
-                Saturation = color.GetSaturation(),
-                Lightness = color.GetBrightness(),
-            };
-        }
     }
 }
