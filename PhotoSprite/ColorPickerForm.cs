@@ -16,28 +16,23 @@ namespace PhotoSprite
     {
         private bool isLocked = false;
         private Color currentColor;
-        public Color CurrentColor 
-        {   get
+
+        public Color CurrentColor
+        {
+            get
             {
                 return currentColor;
             }
             set
             {
-                if (!isLocked)
-                {
-                    isLocked = true;
+                currentColorPictureBox.BackColor = currentColor = value;
 
-                    currentColor = value;
-                    redNumericUpDown.Value = redTrackBar.Value = currentColor.R;
-                    greenNumericUpDown.Value = greenTrackBar.Value = currentColor.G;
-                    blueNumericUpDown.Value = blueTrackBar.Value = currentColor.B;
+                alphaNumericUpDown.Value = alphaTrackBar.Value = currentColor.A;
+                redNumericUpDown.Value = redTrackBar.Value = currentColor.R;
+                greenNumericUpDown.Value = greenTrackBar.Value = currentColor.G;
+                blueNumericUpDown.Value = blueTrackBar.Value = currentColor.B;
 
-                    hexTextBox.Text = String.Format("{0:X2}{1:X2}{2:X2}{3:X2}", currentColor.A, currentColor.R, currentColor.G, currentColor.B);
-
-                    currentColorPictureBox.BackColor = currentColor;
-
-                    isLocked = false;
-                }
+                rgbTextBox.Text = String.Format("{0:X2}{1:X2}{2:X2}{3:X2}", currentColor.A, currentColor.R, currentColor.G, currentColor.B);
             }
         }
 
@@ -45,13 +40,13 @@ namespace PhotoSprite
         {
             InitializeComponent();
 
-            backupColorPictureBox.BackColor = CurrentColor = color;
+            CurrentColor = backupColorPictureBox.BackColor = color;
 
             var colorPictureBoxes = new PictureBox[] { redPictureBox, greenPictureBox, bluePictureBox };
             var colors = new Color[] { Color.Red, Color.Green, Color.Blue };
             var bmps = new Bitmap[3];
 
-            for(var i = 0; i < 3; i++)
+            for (var i = 0; i < 3; i++)
             {
                 bmps[i] = new Bitmap(colorPictureBoxes[i].Width, colorPictureBoxes[i].Height);
                 using (var g = Graphics.FromImage(bmps[i]))
@@ -63,76 +58,172 @@ namespace PhotoSprite
                 }
                 colorPictureBoxes[i].Image = bmps[i];
             }
+
+
+            var bmp = new Bitmap(redTrackBar.Width, redTrackBar.Height);
+            using (var g = Graphics.FromImage(bmp))
+            {
+                g.FillRectangle(Brushes.Red, 0, 0, bmp.Width, bmp.Height);
+            }
+
+         
+            
         }
 
 
+
+        private void alphaTrackBar_Scroll(object sender, EventArgs e)
+        {
+            if (!isLocked)
+            {
+                isLocked = true;
+
+                CurrentColor = Color.FromArgb(alphaTrackBar.Value, CurrentColor.R, CurrentColor.G, CurrentColor.B);
+
+                isLocked = false;
+            }
+        }
+
         private void redTrackBar_Scroll(object sender, EventArgs e)
         {
-            Debug.WriteLine("redTrackBar_Scroll");
-            CurrentColor = Color.FromArgb(CurrentColor.A, redTrackBar.Value, CurrentColor.G, CurrentColor.B);
+            if (!isLocked)
+            {
+                isLocked = true;
+
+                CurrentColor = Color.FromArgb(CurrentColor.A, redTrackBar.Value, CurrentColor.G, CurrentColor.B);
+
+                isLocked = false;
+            }
         }
 
         private void greenTrackBar_Scroll(object sender, EventArgs e)
         {
-            Debug.WriteLine("greenTrackBar_Scroll");
-            CurrentColor = Color.FromArgb(CurrentColor.A, CurrentColor.R, greenTrackBar.Value, CurrentColor.B);
+            if (!isLocked)
+            {
+                isLocked = true;
+
+                CurrentColor = Color.FromArgb(CurrentColor.A, CurrentColor.R, greenTrackBar.Value, CurrentColor.B);
+
+                isLocked = false;
+            }
         }
 
         private void blueTrackBar_Scroll(object sender, EventArgs e)
         {
-            Debug.WriteLine("blueTrackBar_Scroll");
-            CurrentColor = Color.FromArgb(CurrentColor.A, CurrentColor.R, CurrentColor.G, blueTrackBar.Value);
+            if (!isLocked)
+            {
+                isLocked = true;
+
+                CurrentColor = Color.FromArgb(CurrentColor.A, CurrentColor.R, CurrentColor.G, blueTrackBar.Value);
+
+                isLocked = false;
+            }
+        }
+
+
+
+        private void alphaNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (!isLocked)
+            {
+                isLocked = true;
+
+                CurrentColor = Color.FromArgb((int)alphaNumericUpDown.Value, CurrentColor.R, CurrentColor.G, CurrentColor.B);
+
+                isLocked = false;
+            }
         }
 
         private void redNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            Debug.WriteLine("redNumericUpDown_ValueChanged");
-            CurrentColor = Color.FromArgb(CurrentColor.A, (int)redNumericUpDown.Value, CurrentColor.G, CurrentColor.B);
+            if (!isLocked)
+            {
+                isLocked = true;
+
+                CurrentColor = Color.FromArgb(CurrentColor.A, (int)redNumericUpDown.Value, CurrentColor.G, CurrentColor.B);
+
+                isLocked = false;
+            }
         }
 
         private void greenNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            Debug.WriteLine("greenNumericUpDown_ValueChanged");
-            CurrentColor = Color.FromArgb(CurrentColor.A, CurrentColor.R, (int)greenNumericUpDown.Value, CurrentColor.B);
+            if (!isLocked)
+            {
+                isLocked = true;
+
+                CurrentColor = Color.FromArgb(CurrentColor.A, CurrentColor.R, (int)greenNumericUpDown.Value, CurrentColor.B);
+
+                isLocked = false;
+            }
         }
 
         private void blueNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            Debug.WriteLine("blueNumericUpDown_ValueChanged");
-            CurrentColor = Color.FromArgb(CurrentColor.A, CurrentColor.R, CurrentColor.G, (int)blueNumericUpDown.Value);
+            if (!isLocked)
+            {
+                isLocked = true;
+
+                CurrentColor = Color.FromArgb(CurrentColor.A, CurrentColor.R, CurrentColor.G, (int)blueNumericUpDown.Value);
+
+                isLocked = false;
+            }
+        }
+
+
+
+        private void backupColorPictureBox_Click(object sender, EventArgs e)
+        {
+            if (!isLocked)
+            {
+                isLocked = true;
+
+                CurrentColor = backupColorPictureBox.BackColor;
+
+                isLocked = false;
+            }
         }
 
         private void hexTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            Debug.WriteLine("hexTextBox_KeyPress " + e.KeyChar);
             if (e.KeyChar != '\b')
                 e.Handled = !System.Uri.IsHexDigit(e.KeyChar);
         }
 
-        private void hexTextBox_TextChanged(object sender, EventArgs e)
+        private void rgbTextBox_TextChanged(object sender, EventArgs e)
         {
-           Debug.WriteLine("hexTextBox_TextChanged");
-           if(hexTextBox.TextLength == 8)
-           {
-               CurrentColor = Color.FromArgb(
-               Convert.ToInt32(hexTextBox.Text.Substring(0, 2), 16),
-               Convert.ToInt32(hexTextBox.Text.Substring(2, 2), 16),
-               Convert.ToInt32(hexTextBox.Text.Substring(4, 2), 16),
-               Convert.ToInt32(hexTextBox.Text.Substring(6, 2), 16)
-               );
-               hexTextBox.Font = new Font(hexTextBox.Font, hexTextBox.Font.Style & (~FontStyle.Strikeout));
-           }
-           else
-           {
-               hexTextBox.Font = new Font(hexTextBox.Font, hexTextBox.Font.Style | FontStyle.Strikeout);
-           }
+                if (rgbTextBox.TextLength == 8)
+                {
+                    if (!isLocked)
+                    {
+                        isLocked = true;
+
+                        CurrentColor = Color.FromArgb(
+                            Convert.ToInt32(rgbTextBox.Text.Substring(0, 2), 16),
+                            Convert.ToInt32(rgbTextBox.Text.Substring(2, 2), 16),
+                            Convert.ToInt32(rgbTextBox.Text.Substring(4, 2), 16),
+                            Convert.ToInt32(rgbTextBox.Text.Substring(6, 2), 16)
+                        );
+
+                        isLocked = false;
+                    }
+
+                    if(rgbTextBox.Font.Style != FontStyle.Regular)
+                        rgbTextBox.Font = new Font(rgbTextBox.Font, FontStyle.Regular);
+                }
+                else
+                {
+                    if (rgbTextBox.Font.Style != FontStyle.Strikeout)
+                        rgbTextBox.Font = new Font(rgbTextBox.Font, FontStyle.Strikeout);
+                }
         }
 
-        private void backupColorPictureBox_Click(object sender, EventArgs e)
-        {
-            Debug.WriteLine("backupColorPictureBox_Click");
-            CurrentColor = backupColorPictureBox.BackColor;
-        }
+
+
+
+
+
+
 
     }
 }
