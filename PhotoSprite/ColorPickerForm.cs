@@ -32,7 +32,8 @@ namespace PhotoSprite
                 greenNumericUpDown.Value = greenTrackBar.Value = currentColor.G;
                 blueNumericUpDown.Value = blueTrackBar.Value = currentColor.B;
 
-                rgbTextBox.Text = String.Format("{0:X2}{1:X2}{2:X2}{3:X2}", currentColor.A, currentColor.R, currentColor.G, currentColor.B);
+                
+                rgbTextBox.Text = ((uint)currentColor.ToArgb()).ToString("X8");
             }
         }
 
@@ -42,11 +43,11 @@ namespace PhotoSprite
 
             CurrentColor = backupColorPictureBox.BackColor = color;
 
-            var colorPictureBoxes = new PictureBox[] { redPictureBox, greenPictureBox, bluePictureBox };
-            var colors = new Color[] { Color.Red, Color.Green, Color.Blue };
-            var bmps = new Bitmap[3];
+            var colorPictureBoxes = new PictureBox[] {alphaPictureBox, redPictureBox, greenPictureBox, bluePictureBox };
+            var colors = new Color[] {Color.Transparent, Color.Red, Color.Green, Color.Blue };
+            var bmps = new Bitmap[4];
 
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < 4; i++)
             {
                 bmps[i] = new Bitmap(colorPictureBoxes[i].Width, colorPictureBoxes[i].Height);
                 using (var g = Graphics.FromImage(bmps[i]))
@@ -120,8 +121,6 @@ namespace PhotoSprite
             }
         }
 
-
-
         private void alphaNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (!isLocked)
@@ -170,8 +169,6 @@ namespace PhotoSprite
             }
         }
 
-
-
         private void backupColorPictureBox_Click(object sender, EventArgs e)
         {
             if (!isLocked)
@@ -192,35 +189,26 @@ namespace PhotoSprite
 
         private void rgbTextBox_TextChanged(object sender, EventArgs e)
         {
-                if (rgbTextBox.TextLength == 8)
+            if (rgbTextBox.TextLength == 8)
+            {
+                if (!isLocked)
                 {
-                    if (!isLocked)
-                    {
-                        isLocked = true;
+                    isLocked = true;
 
-                        CurrentColor = Color.FromArgb(
-                            Convert.ToInt32(rgbTextBox.Text.Substring(0, 2), 16),
-                            Convert.ToInt32(rgbTextBox.Text.Substring(2, 2), 16),
-                            Convert.ToInt32(rgbTextBox.Text.Substring(4, 2), 16),
-                            Convert.ToInt32(rgbTextBox.Text.Substring(6, 2), 16)
-                        );
+                    CurrentColor = Color.FromArgb(Convert.ToInt32(rgbTextBox.Text, 16));
 
-                        isLocked = false;
-                    }
-
-                    if(rgbTextBox.Font.Style != FontStyle.Regular)
-                        rgbTextBox.Font = new Font(rgbTextBox.Font, FontStyle.Regular);
+                    isLocked = false;
                 }
-                else
-                {
-                    if (rgbTextBox.Font.Style != FontStyle.Strikeout)
-                        rgbTextBox.Font = new Font(rgbTextBox.Font, FontStyle.Strikeout);
-                }
+
+                if(rgbTextBox.Font.Style != FontStyle.Regular)
+                    rgbTextBox.Font = new Font(rgbTextBox.Font, FontStyle.Regular);
+            }
+            else
+            {
+                if (rgbTextBox.Font.Style != FontStyle.Strikeout)
+                    rgbTextBox.Font = new Font(rgbTextBox.Font, FontStyle.Strikeout);
+            }
         }
-
-
-
-
 
 
 

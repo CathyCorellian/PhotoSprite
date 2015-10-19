@@ -79,6 +79,7 @@
             // 
             // rgbTabPage
             // 
+            this.rgbTabPage.BackColor = System.Drawing.SystemColors.Control;
             this.rgbTabPage.Controls.Add(this.alphaNumericUpDown);
             this.rgbTabPage.Controls.Add(this.alphaTrackBar);
             this.rgbTabPage.Controls.Add(this.alphaPictureBox);
@@ -99,7 +100,6 @@
             this.rgbTabPage.Size = new System.Drawing.Size(393, 251);
             this.rgbTabPage.TabIndex = 0;
             this.rgbTabPage.Text = "RGB";
-            this.rgbTabPage.UseVisualStyleBackColor = true;
             // 
             // alphaNumericUpDown
             // 
@@ -128,7 +128,7 @@
             // 
             // alphaPictureBox
             // 
-            this.alphaPictureBox.BackColor = System.Drawing.Color.White;
+            this.alphaPictureBox.BackColor = System.Drawing.SystemColors.Control;
             this.alphaPictureBox.Location = new System.Drawing.Point(44, 18);
             this.alphaPictureBox.Name = "alphaPictureBox";
             this.alphaPictureBox.Size = new System.Drawing.Size(20, 180);
@@ -224,7 +224,7 @@
             // 
             // redPictureBox
             // 
-            this.redPictureBox.BackColor = System.Drawing.Color.White;
+            this.redPictureBox.BackColor = System.Drawing.SystemColors.Control;
             this.redPictureBox.Location = new System.Drawing.Point(121, 18);
             this.redPictureBox.Name = "redPictureBox";
             this.redPictureBox.Size = new System.Drawing.Size(20, 180);
